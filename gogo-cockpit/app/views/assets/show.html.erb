@@ -1,0 +1,22 @@
+<ul class="breadcrumb">
+<li><%= link_to "App: #{@asset.campaign.placement.app.name}", @asset.campaign.placement.app %> <span class="divider"></span></li>
+<li><%= link_to "Placement: #{@asset.campaign.placement.name}", @asset.campaign.placement %> <span class="divider"></span></li>
+<li><%= link_to "Campaign: #{@asset.campaign.name}", @asset.campaign %> <span class="divider"></span></li>
+<li class="active">Asset: <%= @asset.name %></li>
+</ul>
+
+<div class="page-header">
+  <h1><%= @asset.name %><br /><small>App</small></h1>
+</div>
+
+<table class="table-condensed">
+  <tr>
+  <td><strong>Image:</strong></td>
+  <td><a href="<%= raw_asset_url(@asset) %>" target="_blank"><img src="<%= raw_asset_url(@asset) %>" height="200" /></a></td>
+  <td><strong>Weight:</strong></td>
+  <td><%= @asset.weight %></td>
+  </tr>
+</table>
+
+<%= link_to 'Edit asset', edit_asset_path(@asset), :class => "btn btn-default" %>
+<%= link_to 'Remove', [@asset], method: :delete, data: { confirm: "Are you sure?" }, :class => "btn btn-default" %>

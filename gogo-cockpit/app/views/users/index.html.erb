@@ -1,0 +1,28 @@
+<h1>Users</h1>
+
+<table class="table">
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Active</th>
+    <th>Created</th>
+    <th>Confirmed</th>
+    <th>Role</th>
+    <th colspan="3">Actions</th>
+  </tr>
+ 
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
+      <td><%= !!user.is_active %> <% if user != current_user %><%= raw "(" +  link_to('Toggle', toggle_user_path(user), method: :post) + ")" %><% end %></td>
+      <td><%= user.created_at %></td>
+      <td><%= user.confirmed_at %></td>
+      <td><%= user.role %></td>
+      <td><%= link_to 'Show', [user], method: :get %></td>
+      <td><%= link_to 'Remove', [user], method: :delete, data: { confirm: "Are you sure?" } %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to 'Invite user', new_invite_path, :class => "btn btn-default" %>

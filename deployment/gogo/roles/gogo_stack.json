@@ -1,0 +1,21 @@
+{
+  "name": "gogo_stack",
+  "description": "GoGo server and rest of stack",
+  "json_class": "Chef::Role",
+  "chef_type": "role",
+  "override_attributes": {
+    "thin_nginx": {
+      "app_name": "gogo"
+    }
+  },
+  "env_run_lists":{
+    "_default": [
+      "recipe[rvm::system]",
+      "recipe[gogo::postgres]",
+      "recipe[gogo::server]",
+      "recipe[thin_nginx]",
+      "recipe[gogo::nginx]",
+      "recipe[gogo::datadog]"
+    ]
+  }
+}

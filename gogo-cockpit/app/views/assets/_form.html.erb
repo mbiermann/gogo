@@ -1,0 +1,49 @@
+<% 
+  unless @campaign.nil?
+    items = [@campaign.placement, @campaign, @campaign.assets.build]
+    url = placement_campaign_assets_path
+  else
+    items = [@asset]
+    url = asset_path
+  end
+%>
+<%= form_for items, url: url, :html => { :multipart => true, :class => "form-horizontal"} do |f| %>
+
+  <% if @asset.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@asset.errors.count, "error") %> prohibited
+      this asset from being saved:</h2>
+    <ul>
+    <% @campaign.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+  <% end %>
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name, :value => @asset.name||"" %>
+  </p>
+  <p>
+    <%= f.label :weight %><br>
+    <% 
+      options = [] 
+      i = @asset_weight_unit
+      while i < @asset_max_weight+@asset_weight_unit do
+        options << ["#{i}", i]
+        i += @asset_weight_unit
+      end
+    %>
+    <%= f.select :weight, options %>
+  </p>
+
+  <p>Select asset file to upload</p>
+  <% if !@asset.nil? && !@asset.filepath.nil? %>
+  <p><a href="<%= raw_asset_url(@asset) %>" target="_blank"><img src="<%= raw_asset_url(@asset) %>" height="200" /></a></p>
+  <% end %>
+  <p><%= file_field 'upload', 'datafile', accept: 'image/png,image/gif,image/jpeg' %></p></p>
+ 
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

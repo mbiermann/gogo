@@ -1,0 +1,7 @@
+{
+	"gogo": {
+		"env": "production",
+		"domain": "54.76.186.118"
+	},
+	"run_list": [ "role[gogo_stack]" ]
+}

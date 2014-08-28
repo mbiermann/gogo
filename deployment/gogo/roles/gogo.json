@@ -1,0 +1,11 @@
+{
+  "name": "gogo",
+  "description": "GoGo server role",
+  "json_class": "Chef::Role",
+  "chef_type": "role",
+  "env_run_lists":{
+    "_default": [
+      "recipe[gogo::server]"
+    ]
+  }
+}

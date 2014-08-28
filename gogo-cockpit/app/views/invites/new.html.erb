@@ -1,0 +1,45 @@
+<h1>New Invite</h1>
+
+<% 
+  unless @invite.id.nil?
+    url = update_invite_path
+  else
+    url = invites_path
+  end
+%>
+<%= form_for @invite, url: url, :html => { :class => "form-horizontal"} do |f| %>
+
+  <% if @invite.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@invite.errors.count, "error") %> prohibited
+      this invite from being saved:</h2>
+    <ul>
+    <% @invite.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+  <% end %>
+
+  <!-- Pin input-->
+  <div class="control-group">
+    <label class="control-label" for="textinput">PIN</label>
+    <div class="controls">
+          <%= f.text_field :pin, :class => "input-xlarge", :value => @invite.pin||"" %>
+      <p class="help-block">The PIN must be communicated with the invite receiver on a different way. It will not be send with the invite.</p>
+    </div>
+  </div>
+
+  <!-- Email input-->
+  <div class="control-group">
+    <label class="control-label" for="textinput">Email</label>
+    <div class="controls">
+          <%= f.text_field :email, :class => "input-xlarge", :value => @invite.email||"" %>
+      <p class="help-block">The email address of the receiver of the invite. A confirmation email containing a link to this invite will be send to the receiver on submission of this form.</p>
+    </div>
+  </div>
+
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

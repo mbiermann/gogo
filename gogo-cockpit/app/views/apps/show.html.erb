@@ -1,0 +1,29 @@
+<ul class="breadcrumb">
+<li><%= link_to "Apps", apps_path %> <span class="divider"></span></li>
+<li class="active">App: <%= @app.name %></li>
+</ul>
+
+<div class="page-header">
+  <h1><%= @app.name %><br /><small>App</small></h1>
+</div>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Placements</div>
+
+  <table class="table">
+    <tr>
+      <th>Name</th>
+      <th colspan="2">Actions</th>
+    </tr>
+   
+    <% @app.placements.each do |placement| %>
+      <tr>
+        <td><%= placement.name %></td>
+        <td><%= link_to 'Show', [placement], method: :get %></td>
+        <td><%= link_to 'Remove', [placement], method: :delete, data: { confirm: "Are you sure?" } %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+<%= link_to 'Add new placement', new_app_placement_path(@app), :class => "btn btn-default" %>
+<%= link_to 'Edit app', edit_app_path(@app), :class => "btn btn-default" %>

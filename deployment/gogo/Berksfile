@@ -1,0 +1,8 @@
+source "https://api.berkshelf.com"
+
+metadata
+
+cookbook 'apt'
+cookbook 'postgresql', git: 'git://github.com/phlipper/chef-postgresql.git'
+cookbook 'thin_nginx', git: 'git://github.com/kacole2/chef-thin_nginx.git'
+cookbook 'rvm', git: 'git://github.com/fnichol/chef-rvm.git'

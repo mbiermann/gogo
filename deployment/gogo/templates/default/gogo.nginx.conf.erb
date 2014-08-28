@@ -1,0 +1,32 @@
+server {
+    # if you're running multiple servers, instead of "default" you should
+    # put your main domain name here
+    listen 80;
+
+    # you could put a list of other domain names this application answers
+    server_name <%= @domain %>;
+
+    root <%= @root %>/public;
+    access_log /var/log/nginx/<%= @domain %>_access.log;
+    rewrite_log on;
+
+    passenger_enabled on;
+}
+
+server {
+    listen 443; # Instead of Listen 80
+
+    ssl on;
+    ssl_certificate <%= @ssl_cert %>;
+    ssl_certificate_key <%= @ssl_key %>;
+
+    # you could put a list of other domain names this application answers
+    server_name <%= @domain %>;
+
+    root <%= @root %>/public;
+    access_log /var/log/nginx/<%= @domain %>_access.log;
+    rewrite_log on;
+
+    rails_env <%= @rails_env %>
+    passenger_enabled on;
+}

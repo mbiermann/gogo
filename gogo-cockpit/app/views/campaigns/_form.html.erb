@@ -1,0 +1,67 @@
+<% 
+  unless @placement.nil?
+    items = [@placement, @campaign]
+    url = placement_campaigns_path
+  else
+    items = [@campaign]
+    url = campaign_path
+  end
+%>
+<%= form_for items, url: url, html: {class: "form-horizontal"} do |f| %>
+<fieldset>
+  <% if @campaign.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@campaign.errors.count, "error") %> prohibited
+      this campaign from being saved:</h2>
+    <ul>
+    <% @campaign.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+  <% end %>
+
+    <!-- Name input-->
+    <div class="control-group">
+      <label class="control-label" for="textinput">Name</label>
+      <div class="controls">
+            <%= f.text_field :name, :class => "input-xlarge", :value => @campaign.name %>
+        <p class="help-block">For your convenience</p>
+      </div>
+    </div>
+
+    <!-- Start input-->
+    <div class="control-group">
+      <label class="control-label" for="textinput">Start</label>
+      <div class="controls">
+            <% value = if @campaign.start then @campaign.start.strftime('%Y/%m/%d %H:%M') else "" end %>
+            <%= f.datetime_field :start, :class => "datepicker input-xlarge", :value => value %>
+        <p class="help-block">Time in UTC when the campaign is supposed to start delivering assets to the placement</p>
+      </div>
+    </div>
+
+    <!-- Start input-->
+    <div class="control-group">
+      <label class="control-label" for="textinput">End</label>
+      <div class="controls">
+            <% value = if @campaign.end then @campaign.end.strftime('%Y/%m/%d %H:%M') else "" end %>
+            <%= f.text_field :end, :class => "datepicker input-xlarge", :value => value %>
+        <p class="help-block">Time in UTC  when the campaign is supposed to end delivering assets to the placement</p>
+      </div>
+    </div>
+
+    <!-- Submit-->
+    <div class="control-group">
+      <div class="controls">
+          <%= f.submit 'Create', :class => "btn btn-primary" %>
+      </div>
+    </div>
+
+  <script>
+  $(document).ready(function(){
+    $(".datepicker").datetimepicker({ minDate: new Date(), closeOnDateSelect: true, closeOnWithoutClick: true, step: 5});
+  });
+  </script>
+
+</fieldset>
+<% end %>

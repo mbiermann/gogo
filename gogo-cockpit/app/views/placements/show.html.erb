@@ -1,0 +1,39 @@
+<ul class="breadcrumb">
+<li><%= link_to "Apps", apps_path %>  
+<li><%= link_to "App: #{@placement.app.name}", @placement.app %>
+<li class="active">Placement: <%= @placement.name %></li>
+</ul>
+
+<div class="page-header"><h1><%= @placement.name %><br /><small>Placement</small></h1></div>
+
+<table class="table-condensed">
+  <tr>
+    <td><strong>Description:</strong></td>
+    <td><%= @placement.description %></td>
+  </tr>
+</table>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Campaigns</div>
+
+<table class="table table-striped">
+  <tr>
+    <th>Name</th>
+    <th>Start</th>
+    <th>End</th>
+    <th>State</th>
+  </tr>
+ 
+  <% @placement.campaigns.each do |campaign| %>
+  <% active = campaign.start < DateTime.now && campaign.end > DateTime.now %>
+    <tr>
+      <td><%= link_to campaign.name, [campaign], method: :get %></td>
+      <td><%= campaign.start %></td>
+      <td><%= campaign.end %></td>
+      <td><%= !!campaign.is_active ? "active" : "inactive" %> <%= raw "(" +  link_to('Toggle', toggle_campaign_path(campaign), method: :post) + ")" %></td>
+    </tr>
+  <% end %>
+</table>
+</div>
+<%= link_to 'Add new campaign', new_placement_campaign_path(@placement), :class => "btn btn-default" %>
+</div>

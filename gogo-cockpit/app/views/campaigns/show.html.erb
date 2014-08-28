@@ -1,0 +1,43 @@
+<ul class="breadcrumb">
+<li><%= link_to "App: #{@campaign.placement.app.name}", @campaign.placement.app %> <span class="divider"></span></li>
+<li><%= link_to "Placement: #{@campaign.placement.name}", [@campaign.placement.app, @campaign.placement] %> <span class="divider"></span></li>
+<li class="active">Campaign: <%= @campaign.name %></li>
+</ul>
+
+<div class="page-header"><h1><%= @campaign.name %><br /><small>Campaign</small></h1></div>
+
+<table class="table-condensed">
+  <tr>
+  <td><strong>Start:</strong></td>
+  <td><%= @campaign.start %></td>
+  <td><strong>End:</strong></td>
+  <td><%= @campaign.end %></td>
+  </tr>
+</table>
+<% if @campaign.assets.any? %>
+
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Assets</div>
+
+    <table class="table table-striped">
+      <tr>
+        <th>Name</th>
+        <th>Weight</th>
+      </tr>
+
+      <% @campaign.assets.each do |asset| %>
+        <tr>
+          <td><%= link_to asset.name, [asset], method: :get %></td>
+          <td><%= asset.weight %></td>
+        </tr>
+      <% end %>
+    </table>
+</div>
+<% else %>
+
+<div class="alert alert-warning" role="alert">There are no assets in this campaign.</div>
+<% end %>
+<%= link_to 'Add new asset', new_placement_campaign_asset_path(@campaign.placement, @campaign), :class => "btn btn-primary" %>
+<%= link_to 'Edit', edit_campaign_path(@campaign), :class => "btn btn-default" %>
+<%= link_to 'Remove', [@campaign], method: :delete, data: { confirm: "Are you sure?" }, :class => "btn btn-default" %>
